@@ -1,7 +1,7 @@
 Summary: A dynamic OpenSSL engine for IBMCA
 Name: openssl-ibmca
 Version: 1.2.0
-Release: 10%{?dist}
+Release: 5%{?dist}
 License: OpenSSL
 Group: System Environment/Libraries
 URL: http://sourceforge.net/projects/opencryptoki
@@ -10,10 +10,6 @@ Source0: http://downloads.sourceforge.net/opencryptoki/%{name}-%{version}.tar.gz
 Patch0: openssl-ibmca-1.2.0-libica-soname.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=749638
 Patch1: openssl-ibmca-1.2.0-ofb.patch
-# https://bugzilla.redhat.com/show_bug.cgi?id=1074976
-Patch2: openssl-ibmca-1.2.0-sha256-length.patch
-# https://bugzilla.redhat.com/show_bug.cgi?id=1075474
-Patch3: openssl-ibmca-1.2.0-signature-flag.patch
 Requires: libica >= 2.1.0
 BuildRequires: libica-devel >= 2.1.0
 BuildRequires: automake libtool
@@ -27,8 +23,6 @@ A dynamic OpenSSL engine for IBMCA crypto hardware on IBM zSeries machines.
 %setup -q
 %patch0 -p1 -b .libica-soname
 %patch1 -p0 -b .ofb
-%patch2 -p1 -b .1074976
-%patch3 -p1 -b .1075474
 
 sh ./bootstrap.sh
 
@@ -45,32 +39,13 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/libibmca.la
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/openssl/engines
 mv $RPM_BUILD_ROOT%{_libdir}/*.so $RPM_BUILD_ROOT%{_libdir}/openssl/engines
 
-mv openssl.cnf.sample openssl.cnf.sample.%{_arch}
 
 %files
-%doc README openssl.cnf.sample.%{_arch}
+%doc README openssl.cnf.sample
 %{_libdir}/openssl/engines/libibmca.so
 
 
 %changelog
-* Wed Mar 26 2014 Dan Horák <dan[at]danny.cz - 1.2.0-10
-- set signature method flag (#1075474)
-- Resolves: #1075474
-
-* Fri Mar 14 2014 Dan Horák <dan[at]danny.cz - 1.2.0-9
-- fix multilib conflict in sample config file (#1076423)
-- Resolves: #1076423
-
-* Wed Mar 12 2014 Karsten Hopp <karsten@redhat.com> 1.2.0-8
-- Fixed message digest length definition in sha256 template
-- Resolves: #1074976
-
-* Fri Jan 24 2014 Daniel Mach <dmach@redhat.com> - 1.2.0-7
-- Mass rebuild 2014-01-24
-
-* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 1.2.0-6
-- Mass rebuild 2013-12-27
-
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.2.0-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 
