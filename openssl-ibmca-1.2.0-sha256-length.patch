@@ -1,0 +1,12 @@
+diff -up openssl-ibmca-1.2.0/e_ibmca.c.1074976 openssl-ibmca-1.2.0/e_ibmca.c
+--- openssl-ibmca-1.2.0/e_ibmca.c.1074976	2014-03-12 16:17:01.662178599 +0100
++++ openssl-ibmca-1.2.0/e_ibmca.c	2014-03-12 16:17:25.582178365 +0100
+@@ -727,7 +727,7 @@ static const EVP_MD ibmca_sha1 = {
+ static const EVP_MD ibmca_sha256 = {
+ 	NID_sha256,
+ 	NID_sha256WithRSAEncryption,
+-	SHA_HASH_LENGTH,
++	SHA256_HASH_LENGTH,
+ 	0,
+ 	ibmca_sha256_init,
+ 	ibmca_sha256_update,

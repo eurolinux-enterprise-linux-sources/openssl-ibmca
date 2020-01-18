@@ -1,0 +1,46 @@
+#
+# OpenSSL example configuration file. This file will load the IBMCA engine
+# for all operations that the IBMCA engine implements for all apps that
+# have OpenSSL config support compiled into them.
+#
+# Adding OpenSSL config support is as simple as adding the following line to
+# the app:
+#
+# #define OPENSSL_LOAD_CONF	1
+#
+openssl_conf = openssl_def
+
+[openssl_def]
+engines = engine_section
+
+[engine_section]
+
+foo = ibmca_section
+
+[ibmca_section]
+dynamic_path = @libdir@/libibmca.so
+engine_id = ibmca
+init = 1
+#
+# The following ibmca algorithms will be enabled by these parameters
+# to the default_algorithms line. Any combination of these is valid,
+# with "ALL" denoting the same as all of them in a comma separated
+# list.
+#
+# RSA
+# - RSA encrypt, decrypt, sign and verify, key lengths 512-4096
+#
+# RAND
+# - Hardware random number generation
+#
+# CIPHERS
+# - DES-ECB, DES-CBC, DES-CFB, DES-OFB, DES-EDE3, DES-EDE3-CBC, DES-EDE3-CFB,
+#   DES-EDE3-OFB, AES-128-ECB, AES-128-CBC, AES-128-CFB, AES-128-OFB,
+#   AES-192-ECB, AES-192-CBC, AES-192-CFB, AES-192-OFB, AES-256-ECB,
+#   AES-256-CBC, AES-256-CFB, AES-256-OFB symmetric crypto
+#
+# DIGESTS
+# - SHA1, SHA256 digests
+#
+default_algorithms = ALL
+#default_algorithms = RAND,RSA,CIPHERS,DIGESTS
